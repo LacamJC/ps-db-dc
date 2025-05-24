@@ -1,0 +1,27 @@
+
+services:
+  db: 
+    image: postgres
+    environment: 
+      POSTGRES_USER: ramajo
+      POSTGRES_PASSWORD: 123456 
+      POSTGRES_DB: post
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  app:
+    build: . 
+    ports:
+      - "3000:3000"
+    environment:
+      DB_HOST: db 
+      DB_USER: ramajo
+      DB_PASS: 123456
+      DB_NAME: post
+    depends_on:
+      - db
+
+volumes:
+  pgdata:
